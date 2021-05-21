@@ -1,0 +1,4 @@
+usuario01:1920:1001:1001:BO-P Enrique Hernandez:/home/ejemplo01/:/bin/bash
+usuario02:2021:1002:1002:BB-Z Gregoria Hernandez:/home/ejemplo02/:/bin/bash
+usuario03:2021:1003:1003:BA-Y Juan Delgado:/home/ejemplo03/:/bin/bash
+usuarioNoValido:Enrique:1001:1005:BO-P Enrique Hernandez:/home/ejemplo/:/bin/bash
