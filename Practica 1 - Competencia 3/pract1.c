@@ -5,19 +5,19 @@
 typedef struct Lista Lista;
 typedef struct Nodo Nodo;
 
+typedef struct Nodo{
+
+	char *cadena;
+	Nodo *sig; //EL puntero siguiente que recorre la lista enlazada.
+};
+
 struct Lista{
 
 	Nodo *inicio;
 };
 
-typedef struct Nodo{
-
-	char cadena[100];
-	Nodo *sig; //EL puntero siguiente que recorre la lista enlazada.
-};
-
 Lista *lista_nueva(void);
-void insertarEnLista(Lista *L, char cadena[100]);
+void insertarEnLista(Lista *L, char *cadena);
 void imprimirLista(const Lista *L);
 void listaLibera(Lista *L);
 
@@ -63,8 +63,9 @@ int main(int argc, char *argv[]){
 	//Mientras el archivo no llegue al final, se ejecuta el while
 	while(feof(ptr)==0){
 		//Guardamos todos los valores en la cadena ordenalfabetico en su respectivo indice.
-		insertarEnLista(L,fscanf(ptr, "%s", ordenalfabetico[l]));
-		printf("Ingresado correctamente");
+		fscanf(ptr, "%s", ordenalfabetico[l]);
+		insertarEnLista(L, ordenalfabetico[l]);
+		printf("\n %s Ingresado correctamente", ordenalfabetico[l]);
 		l++;
 	}
 
@@ -91,7 +92,8 @@ int main(int argc, char *argv[]){
 	for(ia=0; ia<l; ia++)
     	{
         	printf(" %s",ordenalfabetico[ia]);
-        	insertarEnLista(L,fprintf(ptr2,"%s\n",ordenalfabetico[ia]));
+        	fprintf(ptr2,"%s\n",ordenalfabetico[ia]);
+        	insertarEnLista(L,ordenalfabetico[ia]);
         	imprimirLista(L);
         	listaLibera(L);
         	printf("\n");
@@ -123,32 +125,34 @@ Lista *lista_nueva(void){
 	return L;
 }
 
-void insertarEnLista(Lista *L, char cadena[100]){
+void insertarEnLista(Lista *L, char *cadena){
 
 	Nodo *n, *m;
 	if(L->inicio == NULL){
 		L->inicio = (Nodo *)malloc(sizeof(Nodo));
-		L->inicio->cadena[100] = cadena[100];
+		L->inicio->cadena = cadena;
 		L->inicio->sig = NULL;
+		return;
 	}
 	n = L->inicio;
 	while(n !=NULL){
 		m = n;
 		n = n->sig;
+		return;
 	}
 	m->sig = (Nodo *)malloc(sizeof(Nodo));
 	m->sig->sig = NULL;
-	m->sig->cadena[100] = cadena[100];
+	m->sig->cadena = cadena;
 }
 
 void imprimirLista(const Lista *L){
 
 	Nodo *i;
-	for(i = L->inicio; i != NULL; i->sig){
+	for(i = L->inicio; i == NULL; i= i->sig){
 
-		printf("%s", i->cadena[100]);
-		printf("\n");
+		printf("%s", i->cadena);
 	}
+	printf("\n");
 
 	
 }
@@ -158,6 +162,11 @@ void listaLibera(Lista *L){
 	if(L->inicio == NULL){
 		return;
 	}
+
+	if(L->inicio->sig == NULL){
+		return;
+	}
+
 	Nodo *n,*m, *p;
 	while(n != NULL){
 		m = n;
